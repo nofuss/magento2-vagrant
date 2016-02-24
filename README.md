@@ -1,5 +1,49 @@
 # Vagrant for Magento2
 
+## changes
+
+Git submodules removed
+
+Help from http://devdocs.magento.com/guides/v2.0/install-gde/prereq/integrator\_install.html
+
+Install dependencies:
+```
+vagrant up
+vagrant ssh
+cd /var/www/html
+sudo chown vagrant ../
+composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition magento2
+```
+
+Change ownership for /var/www/html
+```
+sudo chown vagrant /var/www/html
+
+
+Update path in ~/.profile
+```
+PATH="/var/www/html/magento2/bin:$PATH"
+source ~/.profile
+```
+
+Sample installation:
+
+```
+magento setup:install --base-url=http://192.168.33.10/magento2/ \
+--db-host=localhost --db-name=magento --db-user=root \
+--admin-firstname=Magento --admin-lastname=User --admin-email=nofuss@gmail.com \
+--admin-user=admin --admin-password=admin123 --language=en_US \
+--currency=EUR --timezone=Europe/Andorra --cleanup-database \
+--sales-order-increment-prefix="ORD$" --session-save=db --use-rewrites=1
+```
+
+Sample data:
+```
+magento sampledata:deploy
+```
+
+TODO: give the database a password - some processes complain about that
+
 ## Update
 
 **Magento 2 codebase now lives in folder.  You must run an additional command to install Magento 2!**
