@@ -40,9 +40,36 @@ magento setup:install --base-url=http://192.168.33.10/magento2/ \
 Sample data:
 ```
 magento sampledata:deploy
+magento setup:upgrade
+```
+
+Compile before first page load:
+```
+magento setup:di:compile
 ```
 
 TODO: give the database a password - some processes complain about that
+
+TODO: Installing data.. sh: 1: /usr/sbin/sendmail: not found - investigate
+
+TODO: get rid of xdebug
+
+In /etc/php5/apache2/php.ini
+```
+--- php.ini.orig    2016-02-24 22:20:53.588751790 +0000
++++ php.ini 2016-02-24 22:21:15.319611432 +0000
+@@ -1,4 +1,3 @@
+-zend_extension="xdebug.so"
+ [PHP]
+ 
+ ;;;;;;;;;;;;;;;;;;;
+@@ -1929,5 +1928,3 @@
+ ; Local Variables:
+ ; tab-width: 4
+ ; End:
+-xdebug.remote_enable = 1
+-xdebug.remote_connect_back = 1
+```
 
 ## Update
 
