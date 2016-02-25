@@ -91,6 +91,18 @@ TODO: give the database a password - some processes complain about that
 
 TODO: Installing data.. sh: 1: /usr/sbin/sendmail: not found - investigate
 
+Set up cron: http://devdocs.magento.com/guides/v2.0/config-guide/cli/config-cli-subcommands-cron.html
+
+```
+crontab -u vagrant -e
+```
+Entries:
+```
+*/1 * * * * /usr/bin/php -c /etc/php5/apache2/php.ini /var/www/html/magento2/bin/magento cron:run > /var/www/html/magento2/var/log/magento.cron.log&
+*/1 * * * * /usr/bin/php -c /etc/php5/apache2/php.ini /var/www/html/magento2/update/cron.php > /var/www/html/magento2/var/log/update.cron.log&
+*/1 * * * * /usr/bin/php -c /etc/php5/apache2/php.ini /var/www/html/magento2/bin/magento setup:cron:run > /var/www/html/magento2/var/log/setup.cron.log&
+```
+
 ## Update
 
 **Magento 2 codebase now lives in folder.  You must run an additional command to install Magento 2!**
