@@ -9,16 +9,18 @@ Help from http://devdocs.magento.com/guides/v2.0/install-gde/prereq/integrator\_
 Install dependencies:
 ```
 vagrant up
+```
+
+Check default apache installation: http://192.168.33.10/
+
+Get Magento dependencies (requires magento secure keys and github token):
+```
 vagrant ssh
-cd /var/www/html
-sudo chown vagrant ../
+cd /var/www
+sudo chown vagrant html
+cd html
 composer create-project --repository-url=https://repo.magento.com/ magento/project-community-edition magento2
 ```
-
-Change ownership for /var/www/html
-```
-sudo chown vagrant /var/www/html
-
 
 Update path in ~/.profile
 ```
@@ -27,7 +29,6 @@ source ~/.profile
 ```
 
 Sample installation:
-
 ```
 magento setup:install --base-url=http://192.168.33.10/magento2/ \
 --db-host=localhost --db-name=magento --db-user=root \
@@ -37,22 +38,37 @@ magento setup:install --base-url=http://192.168.33.10/magento2/ \
 --sales-order-increment-prefix="ORD$" --session-save=db --use-rewrites=1
 ```
 
-Sample data:
+Sample data (requires magento secure keys again):
 ```
 magento sampledata:deploy
 magento setup:upgrade
 ```
 
-Compile before first page load:
+Admin might not be at admin:
+```
+magento info:adminuri
+```
+
+Compile before first page load (not yet verified):
 ```
 magento setup:di:compile
 ```
 
-TODO: give the database a password - some processes complain about that
 
-TODO: Installing data.. sh: 1: /usr/sbin/sendmail: not found - investigate
+In /etc/apache2/apache2.conf
 
-TODO: get rid of xdebug
+```
+--- apache2.conf.orig   2016-02-25 09:28:14.736631894 +0000
++++ apache2.conf    2016-02-25 09:28:30.596632005 +0000
+@@ -163,7 +163,7 @@
+ 
+ <Directory /var/www/>
+    Options Indexes FollowSymLinks
+-   AllowOverride None
++   AllowOverride All
+    Require all granted
+ </Directory>
+```
 
 In /etc/php5/apache2/php.ini
 ```
@@ -70,6 +86,10 @@ In /etc/php5/apache2/php.ini
 -xdebug.remote_enable = 1
 -xdebug.remote_connect_back = 1
 ```
+
+TODO: give the database a password - some processes complain about that
+
+TODO: Installing data.. sh: 1: /usr/sbin/sendmail: not found - investigate
 
 ## Update
 
